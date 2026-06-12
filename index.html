@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Ceklis Marketing Tools - Bakso Sedjahtera</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        baksed: {
+                            blue: '#2a70a8',    /* Biru background logo */
+                            dark: '#2f4e6f',    /* Biru gelap area mangkok */
+                            orange: '#c74a33',  /* Oranye mie/tulisan */
+                        },
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        body {
+            background-color: #f8fafc;
+        }
+
+        .collapse-content {
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.3s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-left-width: 0;
+        }
+        .collapse-content.active {
+            max-height: 250px;
+            opacity: 1;
+            padding-top: 0.75rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .radio-label {
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-slate-800 font-poppins antialiased min-h-screen p-3 sm:p-5 lg:p-6">
+
+    <div class="max-w-3xl mx-auto w-full space-y-4">
+        
+        <!-- Header & Logo Baksed -->
+        <div class="text-center space-y-1 mb-5 pt-2">
+            <img src="Logo Baksed baru.jpg" alt="Logo Bakso Sedjahtera" class="h-40 sm:h-48 w-auto mx-auto mb-2 object-contain drop-shadow-sm" onerror="this.outerHTML='<div class=\'flex flex-col items-center mb-3\'><div class=\'w-20 h-20 bg-[#2f4e6f] rounded-full flex items-center justify-center mb-2 shadow-md\'><svg class=\'w-10 h-10 text-[#c74a33]\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4h18z\'></path></svg></div><h2 class=\'text-2xl font-black text-[#2a70a8] tracking-widest uppercase\'>BAKSO SEDJAHTERA</h2><p class=\'text-[10px] text-slate-400 mt-0.5\'>(File gambar Logo Baksed baru.jpg terdeteksi tidak di folder yang sama)</p></div>'">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-baksed-dark tracking-tight">Ceklis Marketing Tools</h2>
+            <p class="text-sm text-baksed-orange font-bold">Lengkapi form audit dan lampirkan kondisi aktual.</p>
+        </div>
+
+        <!-- Identitas Form -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/60">
+            <h3 class="text-xs font-bold text-baksed-blue uppercase tracking-wider mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Informasi Auditor
+            </h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-baksed-dark mb-1.5 uppercase tracking-wide">Nama Auditor</label>
+                    <input type="text" id="auditorName" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-baksed-blue focus:border-baksed-blue outline-none transition-all text-sm text-slate-800 placeholder-slate-400" placeholder="Masukkan nama lengkap Anda">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-baksed-dark mb-1.5 uppercase tracking-wide">Lokasi Outlet</label>
+                    <div class="relative">
+                        <select id="outletName" onchange="filterChecklist()" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-baksed-blue focus:border-baksed-blue outline-none transition-all text-sm text-slate-800 appearance-none cursor-pointer">
+                            <option value="" disabled selected>-- Pilih Outlet --</option>
+                            <option value="Baksed Cianjur">Baksed Cianjur</option>
+                            <option value="Baksed Arcamanik">Baksed Arcamanik</option>
+                            <option value="Baksed Suci">Baksed Suci</option>
+                            <option value="Baksed Kopo">Baksed Kopo</option>
+                            <option value="Baksed Gedebage">Baksed Gedebage</option>
+                            <option value="Baksed Ciwastra">Baksed Ciwastra</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-baksed-dark mb-1.5 uppercase tracking-wide">Tanggal Audit</label>
+                    <input type="text" id="auditDate" placeholder="--Isi Tanggal--" onclick="this.type='date'; try { this.showPicker(); } catch(e) {}" onfocus="this.type='date'; try { this.showPicker(); } catch(e) {}" onblur="if(!this.value) this.type='text'" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-baksed-blue focus:border-baksed-blue outline-none transition-all text-sm text-slate-800 cursor-pointer">
+                </div>
+            </div>
+        </div>
+
+        <!-- Score / Percentage Display (Sticky) -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/60 sticky top-2 z-10">
+            <div class="flex justify-between items-end mb-1">
+                <div>
+                    <h3 class="text-xs font-bold text-baksed-blue uppercase tracking-wider">Skor Ketersediaan & Kondisi</h3>
+                    <p id="scoreStatus" class="text-sm sm:text-base font-extrabold mt-1 text-slate-500">Menunggu Input...</p>
+                </div>
+                <div class="text-right">
+                    <span id="scorePercentage" class="text-2xl sm:text-3xl font-black text-baksed-dark">0%</span>
+                </div>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2 mt-2 overflow-hidden">
+                <div id="scoreBar" class="bg-slate-300 h-2 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Container untuk Daftar Item (di-render via JS) -->
+        <div id="checklistContainer" class="space-y-4"></div>
+
+        <!-- Aksi Buttons -->
+        <div class="pt-2 pb-6 space-y-3">
+            <button onclick="exportData()" class="w-full flex items-center justify-center gap-2 bg-baksed-blue hover:bg-baksed-dark text-white font-bold py-3.5 px-6 rounded-xl shadow-md shadow-slate-900/10 transition-all active:scale-[0.98] text-base sm:text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download Laporan (Spreadsheet)
+            </button>
+            <button onclick="confirmReset()" class="w-full flex items-center justify-center gap-2 bg-transparent text-baksed-orange hover:bg-rose-50 font-bold py-2.5 px-6 rounded-xl transition-all active:scale-[0.98]">
+                Reset Form
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="alertModal" class="fixed inset-0 z-50 hidden flex-col items-center justify-center bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-5 max-w-sm w-11/12 shadow-2xl transform scale-95 transition-transform duration-300" id="alertModalContent">
+            <div class="w-10 h-10 mx-auto bg-rose-50 rounded-full flex items-center justify-center mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-baksed-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <h3 class="text-base font-bold text-center text-baksed-dark mb-1">Perhatian</h3>
+            <p id="alertMessage" class="text-slate-500 text-xs text-center mb-5 leading-relaxed"></p>
+            <button onclick="closeAlert()" class="w-full py-2.5 bg-baksed-blue hover:bg-baksed-dark text-white rounded-xl font-bold text-sm transition-colors">Mengerti</button>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="confirmModal" class="fixed inset-0 z-50 hidden flex-col items-center justify-center bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-5 max-w-sm w-11/12 shadow-2xl transform scale-95 transition-transform duration-300" id="confirmModalContent">
+            <h3 class="text-lg font-bold text-center text-baksed-dark mb-1">Reset Data?</h3>
+            <p class="text-slate-500 text-xs text-center mb-5 leading-relaxed">Semua jawaban ceklis dan dokumen foto aktual yang diunggah akan dihapus permanen.</p>
+            <div class="flex gap-2.5">
+                <button onclick="closeConfirm()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-colors">Batal</button>
+                <button onclick="executeReset()" class="flex-1 py-2.5 bg-[#c74a33] hover:bg-[#a63d29] text-white rounded-xl font-bold text-sm transition-colors">Ya, Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden flex-col items-center justify-center bg-slate-900/95 opacity-0 transition-opacity duration-300 backdrop-blur-md">
+        <span class="absolute top-4 right-4 text-white p-2 cursor-pointer bg-white/10 hover:bg-white/20 rounded-full transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </span>
+        <img id="lightboxImg" src="" alt="Zoom" class="max-w-[95%] max-h-[85%] rounded-xl shadow-2xl transform scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
+    </div>
+
+    <script>
+        // Data Base Ceklis Dinamis - Sangat mudah ditambah/dikurangi di sini
+        const checklistData = [
+            // Area Kasir
+            { id: "ksr1", kategori: "Area Kasir", nama: "Poster Fraud atas kasir ukuran 60cm x 50cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Poster+Fraud", exceptions: [] },
+            { id: "ksr2", kategori: "Area Kasir", nama: "Impra A1 (4 Sekat)", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Impra+A1", exceptions: [] },
+            { id: "ksr3", kategori: "Area Kasir", nama: "Kertas Laminating Penanda Order 10cmx20cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Penanda+Order", exceptions: [] },
+            { id: "ksr4", kategori: "Area Kasir", nama: "Papan Menu Akrilik - A3", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Menu+Akrilik", exceptions: [] },
+            { id: "ksr5", kategori: "Area Kasir", nama: "Thankscard - A7", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Thankscard", exceptions: [] },
+
+            // Area Dine In
+            { id: "din1", kategori: "Area Dine In", nama: "Akrilik Sign Lantai2 Mushola dan Toilet", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Sign+Lantai+2", exceptions: ["Baksed Arcamanik", "Baksed Suci"] },
+            { id: "din2", kategori: "Area Dine In", nama: "Striker Glossy Freeice cream 10cmx20cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Striker+Free+Ice+Cream", exceptions: [] },
+            { id: "din3", kategori: "Area Dine In", nama: "Menu Laminating A4 + LTO ditiap Meja", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Menu+Meja", exceptions: [] },
+            { id: "din4", kategori: "Area Dine In", nama: "Pajangan Playground Lt 2 - Luster A1", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Pajangan+Playground", exceptions: ["Baksed Arcamanik", "Baksed Suci"] },
+            { id: "din5", kategori: "Area Dine In", nama: "Striker Cermin", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Striker+Cermin", exceptions: [] },
+            { id: "din6", kategori: "Area Dine In", nama: "Striker Pintu Kaca Ojol 15cmx35cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Striker+Ojol", exceptions: ["Baksed Arcamanik"] },
+            { id: "din7", kategori: "Area Dine In", nama: "Striker Pintu Kaca dilarang membawa makanan dari luar 15cm x 35cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Dilarang+Bawa+Makanan", exceptions: ["Baksed Arcamanik"] },
+            { id: "din8", kategori: "Area Dine In", nama: "Pajangan Google Review", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Google+Review", exceptions: [] },
+            { id: "din9", kategori: "Area Dine In", nama: "Pajangan Kebijakan Halal - A4", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Kebijakan+Halal", exceptions: [] },
+            { id: "din10", kategori: "Area Dine In", nama: "Pajangan Kursi Prioritas - A4", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Kursi+Prioritas", exceptions: [] },
+            { id: "din11", kategori: "Area Dine In", nama: "Pajangan - Ap A4 (8 pcs)", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Pajangan+Ap+A4", exceptions: ["Baksed Arcamanik"] },
+            { id: "din12", kategori: "Area Dine In", nama: "Pajangan Kebijakan Hilang Barang - Ap A4", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Hilang+Barang", exceptions: [] },
+            { id: "din13", kategori: "Area Dine In", nama: "Pajangan Artikel Sedjahtera - Luster A1", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Artikel+Sedjahtera", exceptions: ["Baksed Arcamanik"] },
+            { id: "din14", kategori: "Area Dine In", nama: "Pajangan Brand History - Luster A1", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Brand+History", exceptions: ["Baksed Arcamanik"] },
+            { id: "din15", kategori: "Area Dine In", nama: "Pajangan Google Review - Luster A1", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Google+Review+A1", exceptions: ["Baksed Arcamanik"] },
+            { id: "din16", kategori: "Area Dine In", nama: "Pajangan Keluarga Bahagia - Luster A1", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Keluarga+Bahagia", exceptions: ["Baksed Arcamanik"] },
+            { id: "din17", kategori: "Area Dine In", nama: "Pajangan Bakso Series Kumplit - Luster A1", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Bakso+Kumplit", exceptions: ["Baksed Arcamanik"] },
+            { id: "din18", kategori: "Area Dine In", nama: "Pajangan Keluarga Bahagia oren - Luster A1", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Keluarga+Oren", exceptions: ["Baksed Arcamanik"] },
+
+            // Area Kitchen
+            { id: "kit1", kategori: "Area Kitchen", nama: "Striker Gerobak 157cmx80cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Striker+Gerobak+157", exceptions: ["Baksed Arcamanik", "Baksed Suci"] },
+            { id: "kit2", kategori: "Area Kitchen", nama: "Striker Gerobak 50cmx80cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Striker+Gerobak+50", exceptions: ["Baksed Arcamanik", "Baksed Suci"] },
+            { id: "kit3", kategori: "Area Kitchen", nama: "Striker Halal Gerobak 62cm x 80cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Halal+Gerobak", exceptions: ["Baksed Arcamanik", "Baksed Suci"] },
+            { id: "kit4", kategori: "Area Kitchen", nama: "Striker Kaca Gerobak 100cm x 40cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Kaca+Gerobak", exceptions: ["Baksed Arcamanik", "Baksed Suci"] },
+            { id: "kit5", kategori: "Area Kitchen", nama: "Striker Kitchen 245cmx80cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Striker+Kitchen", exceptions: ["Baksed Arcamanik", "Baksed Suci"] },
+
+            // Area Outdoor
+            { id: "out1", kategori: "Area Outdoor", nama: "Impra Flow Order", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Flow+Order", exceptions: [] },
+            { id: "out2", kategori: "Area Outdoor", nama: "Stand X Banner (1)", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=X+Banner+1", exceptions: [] },
+            { id: "out3", kategori: "Area Outdoor", nama: "Stand X Banner (2)", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=X+Banner+2", exceptions: [] },
+            { id: "out4", kategori: "Area Outdoor", nama: "Cetakan X Banner Waiting List", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Waiting+List", exceptions: [] },
+            { id: "out5", kategori: "Area Outdoor", nama: "Cetakan X Banner Ops Melambat ketika solat", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Ops+Melambat", exceptions: [] },
+            { id: "out6", kategori: "Area Outdoor", nama: "Cetakan X banner Promo", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Banner+Promo", exceptions: [] },
+
+            // Area Playground
+            { id: "ply1", kategori: "Area Playground", nama: "Impra Aturan Playground 60cmx40cm", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Aturan+Playground", exceptions: [] },
+            { id: "ply2", kategori: "Area Playground", nama: "Striker Buka Sendal playground", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Buka+Sendal", exceptions: [] },
+
+            // Area Toilet
+            { id: "tlt1", kategori: "Area Toilet", nama: "Dilarang membuang sampah ke dalam closet", foto: "https://placehold.co/400x400/2f4e6f/ffffff?text=Aturan+Closet", exceptions: [] }
+        ];
+
+        // Object penyimpanan foto aktual
+        const uploadedPhotos = {};
+        
+        let currentPercentage = 0;
+        let currentStatus = "Belum Dinilai";
+
+        // Render struktur list ceklis secara dinamis
+        function renderChecklist() {
+            const container = document.getElementById("checklistContainer");
+            let htmlContent = "";
+
+            checklistData.forEach((item) => {
+                htmlContent += `
+                <div id="card_${item.id}" class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200/60 transition-all hover:shadow-md">
+                    
+                    <div class="mb-3">
+                        <span class="text-[10px] font-bold text-baksed-orange uppercase tracking-wider">${item.kategori}</span>
+                        <h4 class="text-base sm:text-lg font-bold text-baksed-dark leading-snug mt-0.5">${item.nama}</h4>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 items-start">
+                        
+                        <div class="w-full md:w-1/3 shrink-0 flex gap-2">
+                            <!-- Foto Standar -->
+                            <div class="flex-1 flex flex-col gap-1">
+                                <span class="text-[10px] font-semibold text-slate-500 text-center uppercase tracking-wide">Standar</span>
+                                <div class="relative overflow-hidden rounded-xl border border-slate-100 aspect-square bg-slate-50 cursor-pointer group" onclick="openLightbox('${item.foto}')">
+                                    <img src="${item.foto}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${item.nama}">
+                                    <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors flex items-center justify-center">
+                                        <span class="bg-white/90 backdrop-blur-sm text-slate-700 text-[9px] font-bold px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">Detail</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Foto Aktual (Upload/Kamera) -->
+                            <div class="flex-1 flex flex-col gap-1">
+                                <span class="text-[10px] font-semibold text-slate-500 text-center uppercase tracking-wide">Aktual</span>
+                                <div class="relative w-full aspect-square">
+                                    
+                                    <label for="upload_${item.id}" id="label_${item.id}" class="absolute inset-0 rounded-xl border-2 border-dashed border-slate-200 hover:border-slate-400 hover:bg-slate-50 bg-slate-50/50 cursor-pointer transition-colors flex flex-col items-center justify-center">
+                                        <input type="file" id="upload_${item.id}" accept="image/*" capture="environment" class="hidden" onchange="handlePhotoUpload('${item.id}', this)">
+                                        <div class="flex flex-col items-center text-slate-400">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                            <span class="text-[8px] font-bold text-center uppercase tracking-wider px-1">Ambil Foto</span>
+                                        </div>
+                                    </label>
+                                    
+                                    <div id="display_${item.id}" class="absolute inset-0 hidden rounded-xl overflow-hidden border border-slate-200 group bg-black">
+                                        <img id="preview_${item.id}" src="" class="w-full h-full object-cover cursor-pointer opacity-90 hover:opacity-100 transition-opacity" onclick="openLightbox(this.src)">
+                                        
+                                        <div class="absolute top-1.5 right-1.5 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <label for="upload_${item.id}" class="bg-white/90 backdrop-blur-sm text-slate-700 rounded-md p-1 shadow-sm cursor-pointer hover:bg-white transition-colors" title="Ganti Foto">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                                            </label>
+                                            <button type="button" onclick="removePhoto('${item.id}', event)" class="bg-rose-500/90 backdrop-blur-sm text-white rounded-md p-1 shadow-sm cursor-pointer hover:bg-rose-600 transition-colors" title="Hapus Foto">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1 w-full space-y-3">
+                            <div>
+                                <label class="block text-[10px] font-bold text-baksed-blue mb-1.5 uppercase tracking-wide">Ketersediaan Item</label>
+                                <div class="flex gap-2 w-full">
+                                    <div class="flex-1">
+                                        <input type="radio" id="ket_ada_${item.id}" name="ket_${item.id}" value="Ada" class="peer hidden" onchange="toggleKondisi('${item.id}', true)">
+                                        <label for="ket_ada_${item.id}" class="radio-label flex items-center justify-center w-full cursor-pointer px-3 py-2 border border-slate-200 rounded-xl peer-checked:border-baksed-blue peer-checked:bg-baksed-blue peer-checked:text-white hover:bg-slate-50 text-xs sm:text-sm font-bold text-slate-600">
+                                            Tersedia
+                                        </label>
+                                    </div>
+                                    <div class="flex-1">
+                                        <input type="radio" id="ket_tdk_${item.id}" name="ket_${item.id}" value="Tidak Ada" class="peer hidden" onchange="toggleKondisi('${item.id}', false)">
+                                        <label for="ket_tdk_${item.id}" class="radio-label flex items-center justify-center w-full cursor-pointer px-3 py-2 border border-slate-200 rounded-xl peer-checked:border-slate-400 peer-checked:bg-slate-100 peer-checked:text-slate-800 hover:bg-slate-50 text-xs sm:text-sm font-bold text-slate-600">
+                                            Tidak Ada
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pilihan Kondisi -->
+                            <div id="kondisi_${item.id}" class="collapse-content border-t border-slate-100/0 mt-0">
+                                <label class="block text-[10px] font-bold text-baksed-blue mb-1.5 uppercase tracking-wide">Kondisi Fisik Aktual</label>
+                                <div class="flex gap-1.5 w-full">
+                                    <div class="flex-1">
+                                        <input type="radio" id="kon_bg_${item.id}" name="kon_${item.id}" value="Bagus" class="peer hidden" onchange="calculateScore()">
+                                        <label for="kon_bg_${item.id}" class="radio-label flex items-center justify-center w-full cursor-pointer px-1 py-2 border border-slate-200 rounded-lg peer-checked:border-emerald-600 peer-checked:bg-emerald-50 peer-checked:text-emerald-700 hover:bg-slate-50 text-[10px] font-bold text-slate-500 text-center h-full">Sangat Baik</label>
+                                    </div>
+                                    <div class="flex-1">
+                                        <input type="radio" id="kon_mb_${item.id}" name="kon_${item.id}" value="Masih Bagus" class="peer hidden" onchange="calculateScore()">
+                                        <label for="kon_mb_${item.id}" class="radio-label flex items-center justify-center w-full cursor-pointer px-1 py-2 border border-slate-200 rounded-lg peer-checked:border-amber-500 peer-checked:bg-amber-50 peer-checked:text-amber-700 hover:bg-slate-50 text-[10px] font-bold text-slate-500 text-center h-full">Cukup</label>
+                                    </div>
+                                    <div class="flex-1">
+                                        <input type="radio" id="kon_tb_${item.id}" name="kon_${item.id}" value="Tidak Bagus" class="peer hidden" onchange="calculateScore()">
+                                        <label for="kon_tb_${item.id}" class="radio-label flex items-center justify-center w-full cursor-pointer px-1 py-2 border border-slate-200 rounded-lg peer-checked:border-rose-500 peer-checked:bg-rose-50 peer-checked:text-rose-700 hover:bg-slate-50 text-[10px] font-bold text-slate-500 text-center h-full">Rusak</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = htmlContent;
+        }
+
+        // Handle Unggah Foto Aktual
+        function handlePhotoUpload(itemId, input) {
+            const file = input.files[0];
+            if (file) {
+                uploadedPhotos[itemId] = file;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const displayDiv = document.getElementById(`display_${itemId}`);
+                    const labelDiv = document.getElementById(`label_${itemId}`);
+                    const previewImg = document.getElementById(`preview_${itemId}`);
+                    
+                    previewImg.src = e.target.result;
+                    displayDiv.classList.remove('hidden');
+                    labelDiv.classList.add('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Hapus Foto Aktual
+        function removePhoto(itemId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            delete uploadedPhotos[itemId];
+            const input = document.getElementById(`upload_${itemId}`);
+            if(input) input.value = '';
+            
+            document.getElementById(`display_${itemId}`).classList.add('hidden');
+            document.getElementById(`label_${itemId}`).classList.remove('hidden');
+            document.getElementById(`preview_${itemId}`).src = '';
+        }
+
+        // Efek transisi runtuh/tampil area kondisi fisik
+        function toggleKondisi(itemId, isAda) {
+            const kondisiArea = document.getElementById(`kondisi_${itemId}`);
+            const radioKondisi = document.querySelectorAll(`input[name="kon_${itemId}"]`);
+            
+            if (isAda) {
+                kondisiArea.classList.add("active");
+                kondisiArea.classList.add("border-slate-100", "pt-3");
+            } else {
+                kondisiArea.classList.remove("active", "border-slate-100", "pt-3");
+                radioKondisi.forEach(radio => radio.checked = false);
+            }
+            calculateScore();
+        }
+
+        // Penghitungan Skor Persentase & Status secara Otomatis
+        function filterChecklist() {
+            const selectedOutlet = document.getElementById("outletName").value;
+            
+            checklistData.forEach(item => {
+                const card = document.getElementById(`card_${item.id}`);
+                if (!card) return;
+
+                if (selectedOutlet && item.exceptions && item.exceptions.includes(selectedOutlet)) {
+                    card.style.display = 'none'; // Sembunyikan jika outlet masuk pengecualian
+                } else {
+                    card.style.display = 'block'; // Tampilkan jika tidak
+                }
+            });
+            
+            calculateScore(); 
+        }
+
+        function calculateScore() {
+            const selectedOutlet = document.getElementById("outletName").value;
+            let totalChecked = 0;
+            let scoreEarned = 0;
+            
+            checklistData.forEach(item => {
+                // Jangan hitung item yang dikecualikan untuk outlet yang dipilih
+                if (selectedOutlet && item.exceptions && item.exceptions.includes(selectedOutlet)) {
+                    return;
+                }
+
+                const ketAda = document.getElementById(`ket_ada_${item.id}`);
+                const ketTdk = document.getElementById(`ket_tdk_${item.id}`);
+                
+                const konBg = document.getElementById(`kon_bg_${item.id}`);
+                const konMb = document.getElementById(`kon_mb_${item.id}`);
+                const konTb = document.getElementById(`kon_tb_${item.id}`);
+                
+                if (ketTdk && ketTdk.checked) {
+                    // Jika memilih "Tidak Ada", terhitung selesai diaudit, bernilai 0%
+                    totalChecked++;
+                } else if (ketAda && ketAda.checked) {
+                    // Jika memilih "Tersedia", harus melengkapi pilihan kondisi fisiknya dahulu
+                    if ((konBg && konBg.checked) || (konMb && konMb.checked) || (konTb && konTb.checked)) {
+                        totalChecked++;
+                        
+                        // Menambahkan skor HANYA jika kondisinya Sangat Baik (Bagus) atau Cukup (Masih Bagus)
+                        if ((konBg && konBg.checked) || (konMb && konMb.checked)) {
+                            scoreEarned++;
+                        }
+                    }
+                }
+            });
+
+            const scoreBar = document.getElementById('scoreBar');
+            const scorePercentageText = document.getElementById('scorePercentage');
+            const scoreStatusText = document.getElementById('scoreStatus');
+
+            if (totalChecked === 0) {
+                scorePercentageText.innerText = "0%";
+                scoreStatusText.innerText = "Menunggu Input...";
+                scoreStatusText.className = "text-xs sm:text-sm font-extrabold mt-1 text-slate-500";
+                scoreBar.style.width = "0%";
+                scoreBar.className = "bg-slate-300 h-2 rounded-full progress-bar-fill";
+                currentPercentage = 0;
+                currentStatus = "Belum Dinilai";
+                return;
+            }
+
+            const percentage = Math.round((scoreEarned / totalChecked) * 100);
+            currentPercentage = percentage;
+            scoreBar.style.width = `${percentage}%`;
+            scorePercentageText.innerText = `${percentage}%`;
+
+            // Aturan Klasifikasi Skor Kelayakan
+            if (percentage >= 80) {
+                scoreStatusText.innerText = "Bagus (Layak)";
+                scoreStatusText.className = "text-xs sm:text-sm font-extrabold mt-1 text-emerald-600";
+                scoreBar.className = "bg-emerald-500 h-2 rounded-full progress-bar-fill";
+                currentStatus = "Bagus";
+            } else if (percentage >= 50) {
+                scoreStatusText.innerText = "Tidak Terlalu Bagus";
+                scoreStatusText.className = "text-xs sm:text-sm font-extrabold mt-1 text-amber-500";
+                scoreBar.className = "bg-amber-500 h-2 rounded-full progress-bar-fill";
+                currentStatus = "Tidak Terlalu Bagus";
+            } else {
+                scoreStatusText.innerText = "Tidak Bagus (Perlu Perbaikan)";
+                scoreStatusText.className = "text-xs sm:text-sm font-extrabold mt-1 text-rose-500";
+                scoreBar.className = "bg-[#c74a33] h-2 rounded-full progress-bar-fill";
+                currentStatus = "Tidak Bagus";
+            }
+        }
+
+        // Lightbox Modal functions
+        function openLightbox(src) {
+            if(!src) return;
+            const lb = document.getElementById("lightbox");
+            const img = document.getElementById("lightboxImg");
+            img.src = src;
+            lb.classList.remove("hidden");
+            lb.classList.add("flex");
+            setTimeout(() => {
+                lb.classList.remove("opacity-0");
+                img.classList.remove("scale-95");
+                img.classList.add("scale-100");
+            }, 10);
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById("lightbox");
+            const img = document.getElementById("lightboxImg");
+            lb.classList.add("opacity-0");
+            img.classList.remove("scale-100");
+            img.classList.add("scale-95");
+            setTimeout(() => {
+                lb.classList.remove("flex");
+                lb.classList.add("hidden");
+            }, 300);
+        }
+
+        // Modals Management
+        function showAlert(msg) {
+            const modal = document.getElementById('alertModal');
+            const content = document.getElementById('alertModalContent');
+            document.getElementById('alertMessage').innerText = msg;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeAlert() {
+            const modal = document.getElementById('alertModal');
+            const content = document.getElementById('alertModalContent');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function confirmReset() {
+            const modal = document.getElementById('confirmModal');
+            const content = document.getElementById('confirmModalContent');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeConfirm() {
+            const modal = document.getElementById('confirmModal');
+            const content = document.getElementById('confirmModalContent');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Pemrosesan Data & Unduh Laporan (Berubah dari CSV ke Excel HTML-based)
+        function exportData() {
+            const auditor = document.getElementById("auditorName").value.trim();
+            const outlet = document.getElementById("outletName").value;
+            const auditDate = document.getElementById("auditDate").value;
+
+            if (!auditor || !outlet || !auditDate) {
+                showAlert("Harap isi Nama Auditor, Lokasi Outlet, dan Tanggal Audit terlebih dahulu.");
+                return;
+            }
+
+            const now = new Date();
+            const exportTimestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
+            const [year, month, day] = auditDate.split('-');
+            const formattedDate = `${day}/${month}/${year}`;
+
+            // Membuat struktur tabel HTML yang bisa dibaca dan dikonversi otomatis oleh Excel / WPS
+            let excelContent = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head>
+                <meta charset="utf-8">
+                <style>
+                    table { border-collapse: collapse; font-family: sans-serif; }
+                    th, td { border: 1px solid #000000; padding: 10px; text-align: left; vertical-align: middle; }
+                    th { background-color: #2a70a8; color: #ffffff; font-weight: bold; text-align: center; }
+                    .summary td { border: none; padding: 5px; font-weight: bold; }
+                    /* Menambahkan styling khusus untuk sel foto agar rapi */
+                    .foto-cell { text-align: center; vertical-align: middle; width: 160px; height: 160px; padding: 5px; }
+                </style>
+            </head>
+            <body>
+                <table class="summary">
+                    <tr><td>TANGGAL AUDIT</td><td>: ${formattedDate}</td></tr>
+                    <tr><td>WAKTU EXPORT</td><td>: ${exportTimestamp}</td></tr>
+                    <tr><td>NAMA AUDITOR</td><td>: ${auditor}</td></tr>
+                    <tr><td>OUTLET BAKSED</td><td>: ${outlet}</td></tr>
+                    <tr><td>PERSENTASE KELAYAKAN</td><td>: ${currentPercentage}%</td></tr>
+                    <tr><td>STATUS KELAYAKAN</td><td>: ${currentStatus}</td></tr>
+                </table>
+                <br>
+                <table>
+                    <tr>
+                        <!-- Memberikan lebar kolom default agar tampilan spreadsheet lebih profesional -->
+                        <th style="width: 150px;">Kategori Item</th>
+                        <th style="width: 200px;">Nama Item</th>
+                        <th style="width: 120px;">Keterangan</th>
+                        <th style="width: 150px;">Kondisi</th>
+                        <th style="width: 170px;">Foto Aktual</th>
+                    </tr>`;
+
+            checklistData.forEach(item => {
+                // Abaikan item yang dikecualikan agar tidak masuk ke laporan Excel
+                if (item.exceptions && item.exceptions.includes(outlet)) {
+                    return; 
+                }
+
+                const ketEl = document.querySelector(`input[name="ket_${item.id}"]:checked`);
+                const konEl = document.querySelector(`input[name="kon_${item.id}"]:checked`);
+                
+                const keterangan = ketEl ? ketEl.value : "-";
+                let kondisi = "-";
+                
+                if (keterangan === "Ada" && konEl) {
+                    kondisi = konEl.value;
+                }
+
+                // Menyisipkan gambar langsung ke dalam sel tabel jika ada
+                let fotoHtml = "Tidak Ada";
+                if (uploadedPhotos[item.id]) {
+                    const previewImg = document.getElementById(`preview_${item.id}`);
+                    // Memaksa dimensi gambar 150x150 agar baris tabel seragam dan tidak berantakan
+                    fotoHtml = `<img src="${previewImg.src}" width="150" height="150" style="object-fit: cover;">`; 
+                }
+
+                const baris = `
+                    <tr>
+                        <td>${item.kategori}</td>
+                        <td>${item.nama}</td>
+                        <td>${keterangan}</td>
+                        <td>${kondisi}</td>
+                        <td class="foto-cell">${fotoHtml}</td>
+                    </tr>`;
+                excelContent += baris;
+            });
+
+            excelContent += `
+                </table>
+            </body>
+            </html>`;
+
+            // Proses penyimpanan sebagai file .xls
+            const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Audit_Baksed_${outlet.replace(/\s/g, "")}_${now.getTime()}.xls`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Eksekusi Reset Form secara menyeluruh
+        function executeReset() {
+            document.getElementById("auditorName").value = "";
+            document.getElementById("outletName").value = "";
+            
+            const auditDateInput = document.getElementById("auditDate");
+            auditDateInput.value = "";
+            auditDateInput.type = "text";
+            
+            checklistData.forEach(item => {
+                const kondisiArea = document.getElementById(`kondisi_${item.id}`);
+                if (kondisiArea) {
+                    kondisiArea.classList.remove("active", "border-slate-100", "pt-3");
+                }
+                
+                const input = document.getElementById(`upload_${item.id}`);
+                if(input) {
+                    input.value = '';
+                    document.getElementById(`display_${item.id}`).classList.add('hidden');
+                    document.getElementById(`label_${item.id}`).classList.remove('hidden');
+                    document.getElementById(`preview_${item.id}`).src = '';
+                }
+            });
+
+            for (let key in uploadedPhotos) delete uploadedPhotos[key];
+
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.checked = false);
+            
+            filterChecklist(); // Memastikan pengecualian item diterapkan sesuai pilihan dropdown baru
+            calculateScore();
+            closeConfirm();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onload = function() {
+            renderChecklist();
+            filterChecklist(); // Atur tampilan pengecualian awal
+            calculateScore();
+        };
+    </script>
+</body>
+</html>
